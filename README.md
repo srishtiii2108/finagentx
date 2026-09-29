@@ -1,44 +1,8 @@
-::: {align="center"}
-# 🚀 FinAgentX
+
+# FinAgentX
 
 ### Multi-Agent AI for Personalized Investment Decision Support
 
-```{=html}
-<p>
-```
-`<strong>`{=html}An explainable AI-powered financial intelligence
-platform that combines market data, fundamental analysis, technical
-analysis, financial news, multi-agent reasoning, portfolio intelligence,
-and document-grounded financial research in one place.`</strong>`{=html}
-```{=html}
-</p>
-```
-```{=html}
-<p>
-```
-`<img src="https://img.shields.io/badge/Status-In%20Development-orange?style=for-the-badge" alt="Status">`{=html}
-`<img src="https://img.shields.io/badge/AI-Gemini-blue?style=for-the-badge" alt="Gemini">`{=html}
-`<img src="https://img.shields.io/badge/Multi--Agent-LangGraph-purple?style=for-the-badge" alt="Multi Agent">`{=html}
-`<img src="https://img.shields.io/badge/Backend-FastAPI-009688?style=for-the-badge" alt="FastAPI">`{=html}
-`<img src="https://img.shields.io/badge/Frontend-Next.js-black?style=for-the-badge" alt="Next.js">`{=html}
-```{=html}
-</p>
-```
-```{=html}
-<p>
-```
-`<a href="#-overview">`{=html}Overview`</a>`{=html} •
-`<a href="#-features">`{=html}Features`</a>`{=html} •
-`<a href="#-architecture">`{=html}Architecture`</a>`{=html} •
-`<a href="#-tech-stack">`{=html}Tech Stack`</a>`{=html} •
-`<a href="#-setup">`{=html}Setup`</a>`{=html} •
-`<a href="#-roadmap">`{=html}Roadmap`</a>`{=html}
-```{=html}
-</p>
-```
-:::
-
-------------------------------------------------------------------------
 
 ## 📌 Overview
 
@@ -92,7 +56,7 @@ Financial Data + Historical Prices + Technical Indicators + News
 
 ------------------------------------------------------------------------
 
-## 🎯 Problem Statement
+## Problem Statement
 
 Investors frequently rely on multiple disconnected platforms for:
 
@@ -114,7 +78,7 @@ decision-support output.
 
 ------------------------------------------------------------------------
 
-## 💡 Project Objectives
+## Project Objectives
 
 ### Major Objective
 
@@ -143,9 +107,9 @@ agent-based debate into a unified investment decision-support workflow.
 
 ------------------------------------------------------------------------
 
-# ✨ Features
+#  Features
 
-## 🔐 1. User Authentication
+## 1. User Authentication
 
 -   Secure user registration and login
 -   JWT-based authentication
@@ -156,7 +120,7 @@ agent-based debate into a unified investment decision-support workflow.
 
 ------------------------------------------------------------------------
 
-## 📊 2. Live Stock Dashboard
+## 2. Live Stock Dashboard
 
 Users can search for companies such as:
 
@@ -190,7 +154,7 @@ possible.
 
 ------------------------------------------------------------------------
 
-## 📈 3. Interactive Stock Charts
+## 3. Interactive Stock Charts
 
 FinAgentX provides interactive historical market visualization.
 
@@ -225,7 +189,7 @@ AI Interpretation
 
 ------------------------------------------------------------------------
 
-# 🤖 4. Multi-Agent AI Analysis
+# 4. Multi-Agent AI Analysis
 
 The multi-agent architecture is the core of FinAgentX.
 
@@ -237,25 +201,25 @@ specialized agents are assigned different responsibilities.
   -----------------------------------------------------------------------
   Agent                               Responsibility
   ----------------------------------- -----------------------------------
-  🔎 Research Agent                   Company profile, peers, corporate
+   Research Agent                   Company profile, peers, corporate
                                       events and relevant information
 
-  📊 Fundamental Agent                Revenue, profit, debt, valuation
+   Fundamental Agent                Revenue, profit, debt, valuation
                                       and financial health
 
-  📈 Technical Agent                  RSI, MACD, moving averages,
+   Technical Agent                  RSI, MACD, moving averages,
                                       volatility and price signals
 
-  📰 News Agent                       Financial news summarization and
+   News Agent                       Financial news summarization and
                                       sentiment analysis
 
-  🐂 Bull Agent                       Strongest evidence-backed bullish
+   Bull Agent                       Strongest evidence-backed bullish
                                       case
 
-  🐻 Bear Agent                       Strongest evidence-backed bearish
+   Bear Agent                       Strongest evidence-backed bearish
                                       case
 
-  ⚖️ Judge Agent                      Evaluates evidence and synthesizes
+   Judge Agent                      Evaluates evidence and synthesizes
                                       the final decision-support output
   -----------------------------------------------------------------------
 
@@ -292,7 +256,7 @@ explicitly marked as unavailable instead of being fabricated.
 
 ------------------------------------------------------------------------
 
-# 🧠 5. Fundamental Analysis
+# 5. Fundamental Analysis
 
 The Fundamental Agent evaluates available company financial information
 including:
@@ -325,7 +289,7 @@ evaluation.
 
 ------------------------------------------------------------------------
 
-# 📉 6. Technical Analysis
+# 6. Technical Analysis
 
 The Technical Agent works with historical OHLCV data and calculated
 indicators.
@@ -346,7 +310,7 @@ observed technical evidence.
 
 ------------------------------------------------------------------------
 
-# 📰 7. AI Financial News Analysis
+#  7. AI Financial News Analysis
 
 FinAgentX collects relevant financial news and processes it using AI.
 
@@ -377,7 +341,7 @@ AI-generated interpretation.
 
 ------------------------------------------------------------------------
 
-# 🐂🐻 8. Bull vs. Bear AI Debate
+#  8. Bull vs. Bear AI Debate
 
 The Bull and Bear Agents receive the available analyst reports.
 
@@ -394,7 +358,7 @@ rather than simply agreeing with the expected outcome.
 
 ------------------------------------------------------------------------
 
-# ⚖️ 9. Judge Agent
+#  9. Judge Agent
 
 The Judge Agent receives:
 
@@ -434,7 +398,7 @@ probabilities of success.
 
 ------------------------------------------------------------------------
 
-# 💼 10. Portfolio Management
+# 10. Portfolio Management
 
 Users can maintain their investment portfolio by recording holdings such
 as:
@@ -458,7 +422,7 @@ Portfolio information is scoped to the authenticated user.
 
 ------------------------------------------------------------------------
 
-# 🩺 11. AI Portfolio Doctor
+# 11. AI Portfolio Doctor
 
 The AI Portfolio Doctor analyzes portfolio-level risk and
 diversification.
@@ -495,7 +459,7 @@ empirical validation.
 
 ------------------------------------------------------------------------
 
-# 📄 12. Annual Report AI Reader
+# 12. Annual Report AI Reader
 
 Users can upload a company's annual report in PDF format.
 
@@ -536,7 +500,7 @@ provide source/page references wherever feasible.
 
 ------------------------------------------------------------------------
 
-# 🧪 13. Virtual Trading
+# 13. Virtual Trading
 
 FinAgentX can include a paper-trading environment for educational
 practice.
@@ -555,7 +519,7 @@ No real-money trade execution is performed.
 
 ------------------------------------------------------------------------
 
-# 🔔 14. Smart Alerts
+#  14. Smart Alerts
 
 The platform is designed to support alerts for events such as:
 
@@ -569,7 +533,7 @@ The platform is designed to support alerts for events such as:
 
 ------------------------------------------------------------------------
 
-# 🏆 15. Leaderboard
+#  15. Leaderboard
 
 The virtual trading module can provide a competitive learning
 environment.
@@ -583,7 +547,7 @@ Possible metrics include:
 
 ------------------------------------------------------------------------
 
-# 🔄 16. Reflection Agent --- Future Enhancement
+#  16. Reflection Agent --- Future Enhancement
 
 A future Reflection Agent can evaluate previous recommendations after
 sufficient outcome data becomes available.
@@ -609,7 +573,7 @@ requires meaningful historical evaluation data.
 
 ------------------------------------------------------------------------
 
-# 🏗️ Architecture
+#  Architecture
 
 ## High-Level Architecture
 
@@ -661,7 +625,7 @@ requires meaningful historical evaluation data.
 
 ------------------------------------------------------------------------
 
-# 🧩 Technology Stack
+#  Technology Stack
 
   Layer                 Technology
   --------------------- -----------------------------------------------------------
@@ -684,234 +648,8 @@ requires meaningful historical evaluation data.
 > depending on API availability, rate limits, cost, and deployment
 > requirements.
 
-------------------------------------------------------------------------
-
-# 📂 Proposed Project Structure
-
-``` text
-FINAGENTX/
-│
-├── frontend/
-│   ├── app/
-│   │   ├── (auth)/
-│   │   ├── dashboard/
-│   │   ├── stocks/
-│   │   ├── analysis/
-│   │   ├── portfolio/
-│   │   ├── reports/
-│   │   ├── trading/
-│   │   └── leaderboard/
-│   │
-│   ├── components/
-│   │   ├── ui/
-│   │   ├── dashboard/
-│   │   ├── stocks/
-│   │   ├── charts/
-│   │   ├── analysis/
-│   │   ├── agents/
-│   │   └── portfolio/
-│   │
-│   ├── hooks/
-│   ├── lib/
-│   │   ├── api/
-│   │   ├── auth/
-│   │   └── utils/
-│   │
-│   ├── types/
-│   └── package.json
-│
-├── backend/
-│   ├── app/
-│   │   ├── api/
-│   │   │   └── routes/
-│   │   ├── agents/
-│   │   ├── services/
-│   │   │   ├── market_data/
-│   │   │   ├── news/
-│   │   │   ├── fundamentals/
-│   │   │   ├── technicals/
-│   │   │   ├── portfolio/
-│   │   │   └── rag/
-│   │   ├── workflows/
-│   │   ├── repositories/
-│   │   ├── schemas/
-│   │   ├── models/
-│   │   ├── core/
-│   │   └── db/
-│   │
-│   ├── tests/
-│   ├── requirements.txt
-│   └── main.py
-│
-├── docs/
-│   ├── architecture/
-│   ├── api/
-│   └── research/
-│
-├── .env.example
-├── .gitignore
-└── README.md
-```
 
 ------------------------------------------------------------------------
-
-# 🗄️ Core Database Entities
-
-The planned relational model includes:
-
-``` text
-User
- │
- ├── Profile
- ├── Watchlist
- │     └── Watchlist Items
- │
- ├── Portfolio
- │     └── Holdings
- │
- ├── Analyses
- │     └── Agent Reports
- │
- ├── Recommendations
- │
- ├── Annual Reports
- │     └── Report Chunks
- │
- ├── Virtual Account
- │     └── Virtual Trades
- │
- └── Alerts
-```
-
-Additional market and news entities can be introduced as implementation
-requirements evolve.
-
-------------------------------------------------------------------------
-
-# 🔌 Planned API Modules
-
-Example backend API groups:
-
-``` text
-/api/auth
-/api/users
-/api/stocks
-/api/market
-/api/news
-/api/technical-analysis
-/api/ai-analysis
-/api/agents
-/api/recommendations
-/api/portfolio
-/api/portfolio-doctor
-/api/reports
-/api/rag
-/api/trading
-/api/alerts
-/api/leaderboard
-```
-
-All sensitive API keys remain server-side.
-
-------------------------------------------------------------------------
-
-# ⚙️ Installation & Setup
-
-## 1. Clone the Repository
-
-``` bash
-git clone <YOUR_FINAGENTX_REPOSITORY_URL>
-cd FinAgentX
-```
-
-------------------------------------------------------------------------
-
-## 2. Frontend Setup
-
-``` bash
-cd frontend
-npm install
-npm run dev
-```
-
-The frontend will run on the local development URL shown by Next.js.
-
-------------------------------------------------------------------------
-
-## 3. Backend Setup
-
-Create a Python virtual environment:
-
-``` bash
-cd backend
-
-python -m venv venv
-```
-
-### Windows
-
-``` bash
-venv\Scripts\activate
-```
-
-### macOS / Linux
-
-``` bash
-source venv/bin/activate
-```
-
-Install dependencies:
-
-``` bash
-pip install -r requirements.txt
-```
-
-Run FastAPI:
-
-``` bash
-uvicorn app.main:app --reload
-```
-
-------------------------------------------------------------------------
-
-# 🔐 Environment Variables
-
-Create a `.env` file for the backend.
-
-Example:
-
-``` env
-# Application
-ENVIRONMENT=development
-
-# Database
-DATABASE_URL=postgresql://username:password@host:5432/finagentx
-
-# Authentication
-JWT_SECRET=your_secure_secret
-JWT_ALGORITHM=HS256
-
-# Google OAuth
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-
-# Gemini
-GEMINI_API_KEY=your_gemini_api_key
-
-# Market Data
-FINNHUB_API_KEY=your_finnhub_api_key
-
-# News
-NEWS_API_KEY=your_news_api_key
-
-# RAG
-VECTOR_DB_PATH=./data/vector_store
-```
-
-> Never commit `.env` files or API keys to GitHub.
-
-------------------------------------------------------------------------
-
 # 🔑 API/Data Providers
 
 The architecture is designed around provider abstractions so services
@@ -942,7 +680,7 @@ can be replaced without rewriting the application.
 
 ------------------------------------------------------------------------
 
-# 🧪 Testing Strategy
+#  Testing Strategy
 
 FinAgentX should be tested at multiple levels.
 
@@ -977,7 +715,7 @@ Evaluate:
 
 ------------------------------------------------------------------------
 
-# 🛡️ Security Considerations
+# Security Considerations
 
 The project follows security-oriented development practices including:
 
@@ -998,7 +736,7 @@ handling and prompt-injection risks.
 
 ------------------------------------------------------------------------
 
-# 📊 Data & AI Reliability
+# Data & AI Reliability
 
 FinAgentX is designed to distinguish between:
 
@@ -1020,82 +758,8 @@ The system should:
 -   Validate structured AI responses.
 -   Keep generated explanations tied to available evidence.
 
-------------------------------------------------------------------------
 
-# 🗺️ Development Roadmap
-
-### Phase 1 --- Foundation
-
--   [ ] Repository setup
--   [ ] Next.js frontend
--   [ ] FastAPI backend
--   [ ] PostgreSQL
--   [ ] Authentication
--   [ ] Environment configuration
--   [ ] Base API architecture
-
-### Phase 2 --- Market Intelligence
-
--   [ ] Company search
--   [ ] Live market data
--   [ ] Historical OHLCV
--   [ ] Stock detail page
--   [ ] Interactive charts
--   [ ] Technical indicators
-
-### Phase 3 --- AI Analysis
-
--   [ ] Research Agent
--   [ ] Fundamental Agent
--   [ ] Technical Agent
--   [ ] News Agent
--   [ ] Bull Agent
--   [ ] Bear Agent
--   [ ] Judge Agent
--   [ ] Explainable recommendation UI
-
-### Phase 4 --- Portfolio Intelligence
-
--   [ ] Portfolio management
--   [ ] Holdings
--   [ ] Profit/Loss
--   [ ] Sector allocation
--   [ ] Risk metrics
--   [ ] AI Portfolio Doctor
-
-### Phase 5 --- RAG
-
--   [ ] PDF upload
--   [ ] Text extraction
--   [ ] Chunking
--   [ ] Embeddings
--   [ ] Vector search
--   [ ] Gemini RAG responses
--   [ ] Source/page references
-
-### Phase 6 --- FinAgentX Ecosystem
-
--   [ ] Virtual trading
--   [ ] Smart alerts
--   [ ] Leaderboard
--   [ ] Reflection Agent
-
-### Phase 7 --- Production
-
--   [ ] Automated testing
--   [ ] Security review
--   [ ] API optimization
--   [ ] Database optimization
--   [ ] Production environment
--   [ ] Frontend deployment
--   [ ] Backend deployment
--   [ ] Database deployment
--   [ ] Monitoring and logging
--   [ ] Final documentation
-
-------------------------------------------------------------------------
-
-# 🚀 Intended User Journey
+#  Intended User Journey
 
 ``` text
 Login
@@ -1135,7 +799,7 @@ Alerts & Leaderboard
 
 ------------------------------------------------------------------------
 
-# 🎓 Academic & Research Foundation
+#  Academic & Research Foundation
 
 FinAgentX is based on the proposed research work:
 
@@ -1157,7 +821,7 @@ implemented and evaluated working prototype.
 
 ------------------------------------------------------------------------
 
-# ⚠️ Limitations & Responsible Use
+#  Limitations & Responsible Use
 
 FinAgentX is a research and decision-support project.
 
@@ -1176,7 +840,7 @@ Users remain responsible for their own financial decisions.
 
 ------------------------------------------------------------------------
 
-# 📚 Research References
+#  Research References
 
 The project research includes work related to:
 
@@ -1194,7 +858,7 @@ survey and research materials.
 
 ------------------------------------------------------------------------
 
-# 👥 Project Team
+#  Project Team
 
 **FinAgentX --- Multi-Agent AI for Personalized Investment Support**
 
@@ -1209,7 +873,7 @@ survey and research materials.
 
 ------------------------------------------------------------------------
 
-# 👨‍💻 Development
+# Development
 
 Built as a major academic project with a focus on:
 
@@ -1230,7 +894,7 @@ Retrieval-Augmented Generation
 ------------------------------------------------------------------------
 
 ::: {align="center"}
-### 🚀 FinAgentX
+###  FinAgentX
 
 **Research. Analyze. Debate. Understand.**
 
