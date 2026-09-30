@@ -51,3 +51,13 @@ export const executeVirtualTrade = async (tradeData) => {
         throw error.response?.data?.message || "Trade execution failed";
     }
 };
+
+
+export const getPortfolioDoctorAdvice = async (portfolioData) => {
+  try {
+    const response = await axios.post(`${AI_BACKEND_URL}/portfolio-doctor`, portfolioData);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.detail || "Failed to fetch AI Portfolio Doctor advice";
+  }
+};

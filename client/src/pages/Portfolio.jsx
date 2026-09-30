@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardNavbar from '../components/dashboard/DashboardNavbar';
 import { fetchUserPortfolio, analyzeStock } from '../services/api';
-import { Wallet, TrendingUp, TrendingDown, ArrowUpRight, ArrowDownRight, Layers, History, RefreshCw } from 'lucide-react';
+import { Wallet, TrendingUp, TrendingDown, ArrowUpRight, ArrowDownRight, Layers, History, RefreshCw, Stethoscope } from 'lucide-react';
 
 const Portfolio = () => {
   const navigate = useNavigate();
@@ -75,20 +75,29 @@ const Portfolio = () => {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
-        {/* Page Header */}
+        {/* Page Header with New AI Doctor Button */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
           <div>
             <h1 className="text-2xl font-bold text-white mb-1">Virtual Trading Portfolio</h1>
             <p className="text-brand-muted text-sm">Manage your simulated assets, active holdings, and transaction history.</p>
           </div>
-          <button
-            onClick={loadPortfolioData}
-            disabled={loading}
-            className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl text-xs font-semibold transition border border-slate-700"
-          >
-            <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
-            Refresh Portfolio
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate('/portfolio-doctor')}
+              className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-brand-blue hover:from-purple-500 hover:to-blue-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-lg shadow-purple-900/20 border border-purple-500/30"
+            >
+              <Stethoscope className="w-3.5 h-3.5" />
+              AI Portfolio Doctor
+            </button>
+            <button
+              onClick={loadPortfolioData}
+              disabled={loading}
+              className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl text-xs font-semibold transition border border-slate-700"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+              Refresh
+            </button>
+          </div>
         </div>
 
         {error && (

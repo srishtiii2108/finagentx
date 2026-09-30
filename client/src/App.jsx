@@ -5,9 +5,10 @@ import Login from './pages/Login.jsx'
 import EmailVerify from './pages/EmailVerify.jsx'
 import ResetPassword from './pages/ResetPassword.jsx'
 import Dashboard from './pages/Dashboard.jsx'
-import Portfolio from './pages/Portfolio.jsx' // <-- Naya Portfolio Page Import
+import Portfolio from './pages/Portfolio.jsx' 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PortfolioDoctor from './pages/PortfolioDoctor.jsx';
 
 const App = () => {
   return (
@@ -19,7 +20,8 @@ const App = () => {
         <Route path='/email-verify' element={<EmailVerify/>}/>
         <Route path='/reset-password' element={<ResetPassword/>}/>
         <Route path='/dashboard' element={<Dashboard/>}/>
-        <Route path='/portfolio' element={<Portfolio/>}/> {/* <-- Naya Route */}
+        <Route path='/portfolio' element={<Portfolio/>}/> 
+        <Route path='/portfolio-doctor' element={<PortfolioDoctor/>}/>
       </Routes>
     </div>
   )

@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from dotenv import load_dotenv
@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from services.market_data import get_stock_info, get_stock_history, get_market_overview, get_technical_indicators
 from services.news_data import get_company_news 
 from agents.debate_agent import generate_ai_analysis
+from agents.portfolio_agent import analyze_portfolio_health  # <-- Naya Cohere Agent Import
 
 load_dotenv()
 
@@ -112,3 +113,17 @@ def analyze_stock(ticker: str):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Server error during analysis: {str(e)}")
+
+# NAYA ENDPOINT: Portfolio Doctor (Cohere Powered)
+@app.post("/api/portfolio-doctor")
+async def get_portfolio_doctor_advice(request: Request):
+    try:
+        portfolio_data = await request.json()
+        result = analyze_portfolio_health(portfolio_data)
+        
+        if not result.get("success"):
+            raise HTTPException(status_code=500, detail=result.get("message"))
+            
+        return {"success": True, "analysis": result["data"]}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Invalid request format: {str(e)}")
