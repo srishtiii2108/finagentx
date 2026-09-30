@@ -7,6 +7,14 @@ import {
   PASSWORD_RESET_TEMPLATE,
 } from "../config/emailTemplate.js";
 
+// Robust cookie options for cross-domain Vercel & Render deployment
+const cookieOptions = {
+  httpOnly: true,
+  secure: true, // Render aur Vercel dono HTTPS par hain toh true zaroori hai
+  sameSite: 'none', // Cross-domain requests ke liye 'none' compulsory hai
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+};
+
 export const register = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -30,14 +38,8 @@ export const register = async (req, res) => {
       expiresIn: "7d",
     });
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+    res.cookie("token", token, cookieOptions);
 
-    // Send welcome email (Wrapped in try-catch so it doesn't break registration if SMTP fails)
     try {
       const mailOptions = {
         from: process.env.SENDER_EMAIL,
@@ -83,12 +85,7 @@ export const login = async (req, res) => {
       expiresIn: "7d",
     });
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+    res.cookie("token", token, cookieOptions);
 
     return res.json({ success: true });
   } catch (error) {
@@ -100,8 +97,8 @@ export const logout = async (req, res) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+      secure: true,
+      sameSite: 'none',
     });
 
     return res.json({ success: true, message: "Logged out successfully" });
@@ -110,7 +107,6 @@ export const logout = async (req, res) => {
   }
 };
 
-// sender verfication OTP to user's email
 export const sendVerifyOtp = async (req, res) => {
   try {
     const { userId } = req;
@@ -149,7 +145,6 @@ export const sendVerifyOtp = async (req, res) => {
   }
 };
 
-// verify user's account using OTP
 export const verifyEmail = async (req, res) => {
   try {
     const { userId } = req; 
@@ -196,7 +191,6 @@ export const verifyEmail = async (req, res) => {
   }
 };
 
-// Check if user is authenticated
 export const isAuthenticated = async (req, res) => {
   try {
     return res.json({ success: true });
@@ -205,7 +199,6 @@ export const isAuthenticated = async (req, res) => {
   }
 };
 
-// send password reset OTP to email
 export const sendResetOtp = async (req, res) => {
   const { email } = req.body;
 
@@ -222,7 +215,7 @@ export const sendResetOtp = async (req, res) => {
     const otp = String(Math.floor(100000 + Math.random() * 900000));
 
     user.resetOtp = otp;
-    user.resetOtpExpireAt = Date.now() + 15 * 60 * 1000; // 15 minutes
+    user.resetOtpExpireAt = Date.now() + 15 * 60 * 1000;
 
     await user.save();
 
@@ -247,7 +240,6 @@ export const sendResetOtp = async (req, res) => {
   }
 };
 
-// Reset User Password
 export const resetPassword = async (req, res) => {
   const { email, otp, newPassword } = req.body;
 
