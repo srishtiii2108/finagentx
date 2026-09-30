@@ -6,15 +6,23 @@ from dotenv import load_dotenv
 from services.market_data import get_stock_info, get_stock_history, get_market_overview, get_technical_indicators
 from services.news_data import get_company_news 
 from agents.debate_agent import generate_ai_analysis
-from agents.portfolio_agent import analyze_portfolio_health  # <-- Naya Cohere Agent Import
+from agents.portfolio_agent import analyze_portfolio_health
 
 load_dotenv()
 
 app = FastAPI(title="FinAgentX AI Engine")
 
+origins = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:5174",
+    "https://finagentx.vercel.app"
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:5174"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -76,23 +84,19 @@ def fetch_news(company_name: str):
 @app.get("/api/analyze/{ticker}")
 def analyze_stock(ticker: str):
     try:
-        # 1. Fetch Financials
         stock_res = get_stock_info(ticker)
         if not stock_res.get("success"):
             raise HTTPException(status_code=404, detail=stock_res.get("message", "Stock data fetch failed"))
         
         company_name = stock_res["data"].get("company_name", ticker)
         
-        # 2. Fetch News
         search_query = company_name if company_name != "N/A" else ticker
         news_res = get_company_news(search_query)
         news_data = news_res["data"] if news_res.get("success") else []
 
-        # 3. Fetch Deterministic Technical Indicators (RSI, MACD, EMA)
         tech_res = get_technical_indicators(ticker)
         tech_data = tech_res["data"] if tech_res.get("success") else {}
         
-        # 4. Run Multi-Agent AI Debate incorporating Technicals
         ai_res = generate_ai_analysis(stock_res["data"], news_data, tech_data)
         
         if not ai_res.get("success"):
@@ -114,7 +118,6 @@ def analyze_stock(ticker: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Server error during analysis: {str(e)}")
 
-# NAYA ENDPOINT: Portfolio Doctor (Cohere Powered)
 @app.post("/api/portfolio-doctor")
 async def get_portfolio_doctor_advice(request: Request):
     try:
