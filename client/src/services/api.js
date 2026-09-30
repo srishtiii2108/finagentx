@@ -1,7 +1,16 @@
 import axios from 'axios';
 
-const AI_BACKEND_URL = 'http://localhost:8000/api';
-const NODE_SERVER_URL = 'http://localhost:4000/api'; // Node.js backend for authentication & portfolio
+
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+const AI_BACKEND_URL = isLocal 
+  ? 'http://localhost:8000/api' 
+  : 'https://finagentx-ai-backend.onrender.com/api';
+
+const nodeEnvUrl = import.meta.env.VITE_BACKEND_URL;
+const NODE_SERVER_URL = isLocal 
+  ? (nodeEnvUrl ? `${nodeEnvUrl}/api` : 'http://localhost:4000/api')
+  : 'https://finagentx-node-backend.onrender.com/api';
 
 export const analyzeStock = async (ticker) => {
   try {
@@ -51,7 +60,6 @@ export const executeVirtualTrade = async (tradeData) => {
         throw error.response?.data?.message || "Trade execution failed";
     }
 };
-
 
 export const getPortfolioDoctorAdvice = async (portfolioData) => {
   try {
