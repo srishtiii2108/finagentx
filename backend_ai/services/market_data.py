@@ -1,12 +1,28 @@
 import yfinance as yf
 import pandas as pd
 import pandas_ta_classic as ta
+import requests
+
+# Custom session with User-Agent to bypass Yahoo Finance rate-limiting / blocking on Render
+def get_yf_session():
+    session = requests.Session()
+    session.headers.update({
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    })
+    return session
 
 def get_stock_info(ticker: str):
     try:
-        stock = yf.Ticker(ticker)
-        info = stock.info
+        session = get_yf_session()
+        stock = yf.Ticker(ticker, session=session)
         
+        # Safe info fetch with fallback
+        info = {}
+        try:
+            info = stock.info
+        except Exception:
+            pass
+            
         current_price = info.get("currentPrice") or info.get("regularMarketPrice") or info.get("previousClose")
         company_name = info.get("longName") or info.get("shortName") or ticker
         market_cap = info.get("marketCap", "N/A")
@@ -17,6 +33,12 @@ def get_stock_info(ticker: str):
         industry = info.get("industry", "N/A")
         summary = info.get("longBusinessSummary", "N/A")
 
+        # Fallback: Agar .info se price nahi mila, toh 5 days ka history fetch karke latest close price utha lo
+        if not current_price:
+            hist_fallback = stock.history(period="5d")
+            if not hist_fallback.empty:
+                current_price = float(hist_fallback["Close"].iloc[-1])
+
         if not current_price:
             return {"success": False, "message": f"Could not fetch price for ticker {ticker}"}
 
@@ -25,7 +47,7 @@ def get_stock_info(ticker: str):
             "data": {
                 "symbol": ticker.upper(),
                 "company_name": company_name,
-                "current_price": current_price,
+                "current_price": round(current_price, 2),
                 "market_cap": market_cap,
                 "pe_ratio": pe_ratio,
                 "eps": eps,
@@ -41,7 +63,8 @@ def get_stock_info(ticker: str):
 
 def get_stock_history(ticker: str, period: str = "1mo"):
     try:
-        stock = yf.Ticker(ticker)
+        session = get_yf_session()
+        stock = yf.Ticker(ticker, session=session)
         hist = stock.history(period=period)
         
         if hist.empty:
@@ -65,11 +88,8 @@ def get_stock_history(ticker: str, period: str = "1mo"):
 
 
 def get_market_overview():
-    """
-    Fetches live NIFTY 50, SENSEX indices and top trending stocks for initial dashboard view.
-    Includes robust error handling per ticker.
-    """
     try:
+        session = get_yf_session()
         def calc_change(hist_df):
             if hist_df.empty:
                 return 0.0, 0.0, 0.0
@@ -84,30 +104,27 @@ def get_market_overview():
                 return round(curr, 2), 0.0, 0.0
             return 0.0, 0.0, 0.0
 
-        # Indices Data (with safe fallback)
         nifty_val, nifty_chg, nifty_pct = 0.0, 0.0, 0.0
         sensex_val, sensex_chg, sensex_pct = 0.0, 0.0, 0.0
         
         try:
-            nifty = yf.Ticker("^NSEI").history(period="2d")
+            nifty = yf.Ticker("^NSEI", session=session).history(period="2d")
             nifty_val, nifty_chg, nifty_pct = calc_change(nifty)
         except Exception:
             pass
 
         try:
-            sensex = yf.Ticker("^BSESN").history(period="2d")
+            sensex = yf.Ticker("^BSESN", session=session).history(period="2d")
             sensex_val, sensex_chg, sensex_pct = calc_change(sensex)
         except Exception:
             pass
 
-        # Trending Stocks Mini List (Replaced TATAMOTORS with SBIN for stability)
         trending_tickers = ["RELIANCE.NS", "TCS.NS", "INFY.NS", "HDFCBANK.NS", "SBIN.NS"]
         trending_list = []
 
-        # Robust loop: if one stock fails, it skips it instead of crashing the whole API
         for sym in trending_tickers:
             try:
-                stk = yf.Ticker(sym)
+                stk = yf.Ticker(sym, session=session)
                 h = stk.history(period="2d")
                 
                 if h.empty:
@@ -124,7 +141,7 @@ def get_market_overview():
                 })
             except Exception as e:
                 print(f"Skipping {sym} due to error: {e}")
-                continue # Skip failing ticker and continue with the rest
+                continue
 
         return {
             "success": True,
@@ -139,15 +156,13 @@ def get_market_overview():
 
 
 def get_technical_indicators(ticker: str):
-    """
-    Calculates deterministic technical indicators (RSI, MACD, EMA) using pandas-ta.
-    """
     try:
-        stock = yf.Ticker(ticker)
+        session = get_yf_session()
+        stock = yf.Ticker(ticker, session=session)
         df = stock.history(period="1y")
         
-        if df.empty or len(df) < 200:
-            return {"success": False, "message": "Not enough historical data for robust technicals"}
+        if df.empty or len(df) < 50:
+            return {"success": False, "message": "Not enough historical data for technical indicators"}
             
         df.ta.rsi(length=14, append=True)
         df.ta.macd(fast=12, slow=26, signal=9, append=True)
