@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 from dotenv import load_dotenv
 
-from services.market_data import get_stock_info, get_stock_history, get_market_overview
+from services.market_data import get_stock_info, get_stock_history, get_market_overview, get_technical_indicators
 from services.news_data import get_company_news 
 from agents.debate_agent import generate_ai_analysis
 
@@ -31,7 +31,6 @@ def health_check():
         "news_api_configured": bool(os.getenv("NEWS_API_KEY"))
     }
 
-# NEW: Pre-Search Home Summary Endpoint (Indices, Trending Stocks & Default News)
 @app.get("/api/market-summary")
 def fetch_market_summary():
     try:
@@ -76,17 +75,24 @@ def fetch_news(company_name: str):
 @app.get("/api/analyze/{ticker}")
 def analyze_stock(ticker: str):
     try:
+        # 1. Fetch Financials
         stock_res = get_stock_info(ticker)
         if not stock_res.get("success"):
             raise HTTPException(status_code=404, detail=stock_res.get("message", "Stock data fetch failed"))
         
         company_name = stock_res["data"].get("company_name", ticker)
         
+        # 2. Fetch News
         search_query = company_name if company_name != "N/A" else ticker
         news_res = get_company_news(search_query)
         news_data = news_res["data"] if news_res.get("success") else []
+
+        # 3. Fetch Deterministic Technical Indicators (RSI, MACD, EMA)
+        tech_res = get_technical_indicators(ticker)
+        tech_data = tech_res["data"] if tech_res.get("success") else {}
         
-        ai_res = generate_ai_analysis(stock_res["data"], news_data)
+        # 4. Run Multi-Agent AI Debate incorporating Technicals
+        ai_res = generate_ai_analysis(stock_res["data"], news_data, tech_data)
         
         if not ai_res.get("success"):
             raise HTTPException(status_code=500, detail=ai_res.get("message", "AI analysis failed"))
@@ -95,6 +101,7 @@ def analyze_stock(ticker: str):
             "success": True,
             "ticker": ticker.upper(),
             "company_info": stock_res["data"],
+            "technical_info": tech_data,
             "news_analyzed": len(news_data),
             "news_list": news_data,
             "ai_analysis": {

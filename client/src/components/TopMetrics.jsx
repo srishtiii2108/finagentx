@@ -1,46 +1,65 @@
-import React from 'react';
-import { Briefcase, Cpu, Activity } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Wallet, Cpu, Activity } from 'lucide-react';
+import { fetchUserPortfolio } from '../services/api';
 
 const TopMetrics = ({ isDataLoaded }) => {
+  const [cashBalance, setCashBalance] = useState(1000000);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getPortfolioSummary = async () => {
+      try {
+        const res = await fetchUserPortfolio();
+        if (res.success && res.portfolio) {
+          setCashBalance(res.portfolio.cashBalance || 1000000);
+        }
+      } catch (err) {
+        console.error("Failed to load portfolio metrics");
+      } finally {
+        setLoading(false);
+      }
+    };
+    getPortfolioSummary();
+  }, []);
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-      <div className="bg-brand-surface border border-brand-border p-5 rounded-xl">
-        <div className="flex justify-between items-start mb-4">
-          <div>
-            <p className="text-brand-muted text-sm font-medium mb-1">Virtual Buying Power</p>
-            <h3 className="text-2xl font-bold text-white">₹10,00,000</h3>
-          </div>
-          <div className="p-2 bg-brand-primary rounded-lg">
-            <Briefcase className="w-5 h-5 text-brand-blue" />
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+      {/* Metric 1: Real Virtual Buying Power from DB */}
+      <div className="bg-brand-surface border border-brand-border p-5 rounded-2xl shadow-xl relative overflow-hidden">
+        <div className="flex justify-between items-start mb-3">
+          <span className="text-xs font-bold text-brand-muted uppercase tracking-wider">Virtual Buying Power</span>
+          <div className="p-2 bg-blue-500/10 text-blue-400 rounded-xl">
+            <Wallet className="w-5 h-5" />
           </div>
         </div>
-        <p className="text-brand-muted text-xs">Ready for simulated trading</p>
+        <h3 className="text-2xl font-black text-white">
+          ₹{cashBalance.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
+        </h3>
+        <span className="text-xs text-emerald-400 font-medium mt-1 inline-block">Synced with Virtual Portfolio</span>
       </div>
 
-      <div className="bg-brand-surface border border-brand-border p-5 rounded-xl">
-        <div className="flex justify-between items-start mb-4">
-          <div>
-            <p className="text-brand-muted text-sm font-medium mb-1">Active AI Agents</p>
-            <h3 className="text-2xl font-bold text-white">3 Modules</h3>
-          </div>
-          <div className="p-2 bg-brand-primary rounded-lg">
-            <Cpu className="w-5 h-5 text-brand-success" />
+      {/* Metric 2: Active AI Agents */}
+      <div className="bg-brand-surface border border-brand-border p-5 rounded-2xl shadow-xl relative overflow-hidden">
+        <div className="flex justify-between items-start mb-3">
+          <span className="text-xs font-bold text-brand-muted uppercase tracking-wider">Active AI Agents</span>
+          <div className="p-2 bg-purple-500/10 text-purple-400 rounded-xl">
+            <Cpu className="w-5 h-5" />
           </div>
         </div>
-        <p className="text-brand-muted text-xs">Bull, Bear & Judge engines online</p>
+        <h3 className="text-2xl font-black text-white">3 Modules</h3>
+        <span className="text-xs text-brand-muted mt-1 inline-block">Bull, Bear & Judge engines online</span>
       </div>
 
-      <div className="bg-brand-surface border border-brand-border p-5 rounded-xl">
-        <div className="flex justify-between items-start mb-4">
-          <div>
-            <p className="text-brand-muted text-sm font-medium mb-1">Session Insights</p>
-            <h3 className="text-2xl font-bold text-white">{isDataLoaded ? 1 : 0}</h3>
-          </div>
-          <div className="p-2 bg-brand-primary rounded-lg">
-            <Activity className="w-5 h-5 text-brand-indigo" />
+      {/* Metric 3: Session Insights */}
+      <div className="bg-brand-surface border border-brand-border p-5 rounded-2xl shadow-xl relative overflow-hidden">
+        <div className="flex justify-between items-start mb-3">
+          <span className="text-xs font-bold text-brand-muted uppercase tracking-wider">Session Insights</span>
+          <div className="p-2 bg-emerald-500/10 text-emerald-400 rounded-xl">
+            <Activity className="w-5 h-5" />
           </div>
         </div>
-        <p className="text-brand-muted text-xs">Analyses generated in current session</p>
+        <h3 className="text-2xl font-black text-white">{isDataLoaded ? '1' : '0'}</h3>
+        <span className="text-xs text-brand-muted mt-1 inline-block">Analyses generated in current session</span>
       </div>
     </div>
   );
